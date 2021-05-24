@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block style %}
+<style>
+  body {
+    background-image: url(static/img/bg_login.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    height: 100vh;
+  }
+  header {
+    padding-top: 5em;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<header>
+  <h1>Um lugar para você organizar<br/>tudo aquilo que você já leu</h1>
+</header>
+<main>
+  <form action="/login" method="post">
+    <div class="form-group">
+      <input autocomplete="off" autofocus class="form-control" name="username" placeholder="E-mail" type="text">
+    </div>
+    <div class="form-group">
+      <input class="form-control" name="password" placeholder="Senha" type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Login</button>
+  </form>
+
+  <form action="/register" method="post">
+    <div class="form-group">
+      <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+    </div>
+    <div class="form-group">
+      <input class="form-control" name="password" placeholder="Senha" type="password">
+    </div>
+    <div class="form-group">
+      <input class="form-control" name="confirmation" placeholder="Confirmar Senha" type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Registrar</button>
+  </form>
+</main>
+{% endblock %}

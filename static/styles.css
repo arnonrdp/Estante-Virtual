@@ -24,7 +24,7 @@ img {
 }
 /* FORMATAÇÃO DO CABEÇALHO */
 .mainHeader {
-	height: 3em;
+	height: 3.5em;
 	letter-spacing: 1px;
 }
 .mainHeader h1 span {
@@ -77,12 +77,12 @@ img {
 /* FORMATAÇÃO DO CONTEÚDO */
 main {
 	min-height: 100vh;
-  min-height: calc(100vh - (11em + 35px));
-  min-height: -moz-calc(100vh - (11em + 35px));
-  min-height: -webkit-calc(100vh - (11em + 35px));
+  min-height: calc(100vh - (11.5em + 24px));
+  min-height: -moz-calc(100vh - (11.5em + 24px));
+  min-height: -webkit-calc(100vh - (11.5em + 24px));
   position: relative;
 	/* Calc:
-	header: 3em (+10px margin) + aside: 4.5 (+10px margin) + footer: 3.5 (+5px margin) = 11em + 35px
+	header: 3.5em (+10px margin) + aside: 4.5 (+10px margin) + footer: 3.5 (+5px margin) = 11em + 35px
 	*/
 }
 .mainContent #Início {
@@ -137,8 +137,6 @@ main {
 }
 /* FORMATAÇÃO DA ABA ADICIONAR */
 #Adicionar div {
-	display: flex;
-	justify-content: center;
 	width: 100%;
 }
 #Adicionar div input {
