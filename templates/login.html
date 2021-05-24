@@ -9,38 +9,132 @@
     background-position: top center;
     height: 100vh;
   }
+
   header {
-    padding-top: 5em;
+    padding: 5em 0;
+  }
+
+  header h1 {
+    mix-blend-mode: color-dodge;
+  }
+
+  main section {
+    width: 20em;
+    margin: auto;
+    padding: 1em;
+    background-color: #e6e7ee;
+    ;
+    border-radius: 6px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0%;
+    padding: 0 10px 15px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  ul li {
+    width: 100%;
+    margin: 0 1vw;
+  }
+
+  ul li a {
+    display: block;
+    font-size: 80%;
+    padding: 8px 0;
+    border-radius: 6px;
+    border: 0.5px solid transparent;
+    box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #ffffff;
+  }
+
+  ul li a:hover, ul li a.active {
+    background-color: #dee3e6;
+    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  form input {
+    width: 20em;
+    margin: 5px 0;
+    padding: 10px;
+    overflow: visible;
+    outline: 0;
+    border-radius: 18px;
+    background-clip: padding-box;
+    border: 0.5px solid #D1D9E6;
+    background-color: #dee3e6;
+    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
+  }
+
+  form button {
+    margin: 5px 0 0;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #dee3e6;
+    border: 0.5px solid transparent;
+    box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #ffffff;
+  }
+
+  form button:hover {
+    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
   }
 </style>
 {% endblock %}
 
 {% block body %}
 <header>
-  <h1>Um lugar para você organizar<br/>tudo aquilo que você já leu</h1>
+  <h1>UM LUGAR PRA VOCÊ ORGANIZAR<br>TUDO AQUILO QUE VOCÊ JÁ LEU</h1>
 </header>
 <main>
-  <form action="/login" method="post">
-    <div class="form-group">
-      <input autocomplete="off" autofocus class="form-control" name="username" placeholder="E-mail" type="text">
-    </div>
-    <div class="form-group">
-      <input class="form-control" name="password" placeholder="Senha" type="password">
-    </div>
-    <button class="btn btn-primary" type="submit">Login</button>
-  </form>
+  <section>
+    <ul>
+      <li><a class="tablinks" onclick="alternar(event, 'Entrar')" id="defaultOpen">Entrar</a></li>
+      <li><a class="tablinks" onclick="alternar(event, 'Registrar')">Registrar</a></li>
+    </ul>
 
-  <form action="/register" method="post">
-    <div class="form-group">
-      <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
-    </div>
-    <div class="form-group">
-      <input class="form-control" name="password" placeholder="Senha" type="password">
-    </div>
-    <div class="form-group">
-      <input class="form-control" name="confirmation" placeholder="Confirmar Senha" type="password">
-    </div>
-    <button class="btn btn-primary" type="submit">Registrar</button>
-  </form>
+    <form id='Entrar' class="tabcontent" action="/login" method='post'>
+      <input type="email" name="username" placeholder="E-mail" autofocus required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <button type='submit'>Login</button>
+    </form>
+
+    <form id='Registrar' class="tabcontent" action="/register" method='post'>
+      <input type="email" name="username" placeholder="E-mail" autocomplete="off" required>
+      <input type="password" name="password" placeholder="Senha" autocomplete="off" required>
+      <input type="password" name="confirmation" placeholder="Confirmar Senha" autocomplete="off" required>
+      <button type='submit'>Registrar</button>
+    </form>
+
+  </section>
 </main>
+
+<script>
+  // FUNÇÃO RESPONSÁVEL PELAS ABAS DA BARRA LATERAL
+  function alternar(evt, tagName) {
+    // Declaração de todas as variáveis
+    var i, tabcontent, tablinks;
+    // Recebe todos os elementos com a class="tabcontent" e oculta
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    // Recebe todos os elementos com a class="tablinks" e remove a class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    // Mostra a aba atual, e adiciona um class "active" ao link aberto pela aba
+    document.getElementById(tagName).style.display = "flex";
+    evt.currentTarget.className += " active";
+  }
+  // Recebe o elemento com o id="defaultOpen" e clica nele, definindo como a aba padrão
+  document.getElementById("defaultOpen").click();
+</script>
 {% endblock %}

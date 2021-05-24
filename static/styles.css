@@ -1,4 +1,9 @@
-@charset "UTF8";
+:root {
+	--primary-bg: #e6e7ee;
+	--primary-text: #44476a;
+	--link-color: #333333;
+}
+
 @font-face {
 	font-family: 'SF Pro Text';
 	src: url("fonts/SF-Pro-Text-Regular.otf");
@@ -7,13 +12,13 @@
 body {
 	margin: 5px;
 	font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-	color: #44476a;
-	background-color: #e6e7ee;
+	color: var(--primary-text);
+	background-color: var(--primary-bg);
 	text-align: center;
 }
 /* Comportamento dos Links */
 a:link, a:active, a:visited, a:hover {
-	color: #333;
+	color: var(--link-color);
 	text-decoration: none;
 	position: relative;
 }
@@ -38,7 +43,7 @@ img {
 	overflow: hidden;
 }
 .tablinks {
-	color: #333;
+	color: var(--link-color);
 	cursor: pointer;
 }
 .tabcontent {
