@@ -11,29 +11,27 @@
   <title>Minha Estante Virtual{% block title %}{% endblock %}</title>
 </head>
 <body>
-  <div class="wrapper">
-		<!-- Cabeçalho -->
-		<header class="mainHeader">
-			<h1><span>Estante do Arnon</span></h1>
-		</header>
-		<!-- Barra Lateral -->
-		<aside class="mainAside tab">
-			<ul>
-        <li><a class="tablinks" onclick="alternar(event, 'Início')" id="defaultOpen"><i class="material-icons md-22">book</i><br/>Início</a></li>
-        <li><a class="tablinks" onclick="alternar(event, 'Adicionar')"><i class="material-icons-outlined md-22">search</i><br/>Adicionar</a></li>
-        <li><a class="tablinks" onclick="alternar(event, 'Amigos')"><i class="material-icons-outlined md-22">people_alt</i><br/>Amigos</a></li>
-        <li><a class="tablinks" onclick="alternar(event, 'Ajustes')"><i class="material-icons-outlined md-22">settings</i><br/>Ajustes</a></li>
-			</ul>
-		</aside>
-    <main>
-      {% block main %}{% endblock %}
-    </main>
-    <footer class="mainFooter">
-			<div>
-				<p>Copyright &copy 2020 - by Arnon Rodrigues<br/><a href="https://twitter.com/arnonrdp" target="_blank">Twitter</a></p>
-			</div>
-		</footer>
-	</div>
+	<!-- Cabeçalho -->
+	<header class="mainHeader">
+		<h1><span>Estante do Arnon</span></h1>
+	</header>
+	<!-- Barra Lateral -->
+	<aside class="mainAside tab">
+		<ul>
+			<li><a class="tablinks" onclick="alternar(event, 'Início')" id="defaultOpen"><i class="material-icons md-22">book</i><br/>Início</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Adicionar')"><i class="material-icons-outlined md-22">search</i><br/>Adicionar</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Amigos')"><i class="material-icons-outlined md-22">people_alt</i><br/>Amigos</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Ajustes')"><i class="material-icons-outlined md-22">settings</i><br/>Ajustes</a></li>
+		</ul>
+	</aside>
+	<main>
+		{% block main %}{% endblock %}
+	</main>
+	<footer class="mainFooter">
+		<div>
+			<p>Copyright &copy 2020 - by Arnon Rodrigues<br/><a href="https://twitter.com/arnonrdp" target="_blank">Twitter</a></p>
+		</div>
+	</footer>
 
 	<!-- LOADER -->
 	<script src="static/script.js"></script>

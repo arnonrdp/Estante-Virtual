@@ -3,22 +3,13 @@
 	font-family: 'SF Pro Text';
 	src: url("fonts/SF-Pro-Text-Regular.otf");
 }
-.wrapper {
-	display: flex;
-	flex-flow: row wrap;
-	text-align: center;
-}
-.wrapper > * {
-	margin: 5px;
-	flex: 1 100%;
-	border-radius: 6px;
-}
 /* Corpo do Site */
 body {
+	margin: 5px;
 	font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 	color: #44476a;
 	background-color: #e6e7ee;
-	margin: 0 auto;
+	text-align: center;
 }
 /* Comportamento dos Links */
 a:link, a:active, a:visited, a:hover {
@@ -33,10 +24,8 @@ img {
 }
 /* FORMATAÇÃO DO CABEÇALHO */
 .mainHeader {
+	height: 3em;
 	letter-spacing: 1px;
-}
-.mainHeader h1 {
-	margin: 20px 15px 15px 15px;
 }
 .mainHeader h1 span {
 	padding: 10px 30px;
@@ -56,6 +45,9 @@ img {
 	display: none;
 }
 /* FORMATAÇÃO DA BARRA LATERAL */
+.mainAside {
+	height: 4.5em;
+}
 .mainAside ul {
 	list-style-type: none;
 	margin: 0%;
@@ -77,12 +69,22 @@ img {
 }
 .mainAside ul li a:hover, .mainAside ul li a.active, #Adicionar div input {
 	background-color: #dee3e6;
-	box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #FFFFFF;
+	box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
 }
 .material-icons.md-22, .material-icons-outlined.md-22 {
 	font-size: 22px;
 }
 /* FORMATAÇÃO DO CONTEÚDO */
+main {
+	min-height: 100vh;
+  min-height: calc(100vh - (11em + 35px));
+  min-height: -moz-calc(100vh - (11em + 35px));
+  min-height: -webkit-calc(100vh - (11em + 35px));
+  position: relative;
+	/* Calc:
+	header: 3em (+10px margin) + aside: 4.5 (+10px margin) + footer: 3.5 (+5px margin) = 11em + 35px
+	*/
+}
 .mainContent #Início {
 	min-height: 285px;
 	background-image: url("img/shelfleft.png"), url("img/shelfright.png"), url("img/shelfcenter.png");
@@ -157,6 +159,10 @@ section#Ajustes {
 	justify-content: center;
 }
 /* FORMATAÇÃO DO RODAPÉ */
+.mainFooter {
+	height: 3.5em;
+	border-radius: 6px;
+}
 .mainFooter, .mainFooter a {
 	background: #1f3c58;
 	font-size: 9pt;
