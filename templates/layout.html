@@ -6,15 +6,45 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="static/styles.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined">
-	<link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">
+	<link rel="shortcut icon" href="static/favicon.svg" type="image/x-icon">
 	{% block style %}{% endblock %}
 	<title>Minha Estante Virtual</title>
 </head>
 
 <body>
-	{% block body %}{% endblock %}
+	<!-- Cabeçalho -->
+	<header class="mainHeader">
+		<h1><span>Estante do Arnon</span></h1>
+	</header>
+
+	<!-- Barra Lateral -->
+	<aside class="mainAside tab">
+		<ul>
+			<li><a class="tablinks" onclick="alternar(event, 'Início')" id="defaultOpen">
+					<img src="static/img/books.svg"></img><br>Início</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Adicionar')">
+					<img src="static/img/search.svg"></img><br>Adicionar</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Amigos')">
+					<img src="static/img/people.svg"></img><br>Amigos</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Ajustes')">
+					<img src="static/img/settings.svg"></img><br>Ajustes</a></li>
+		</ul>
+	</aside>
+
+	<main>
+		{% block main %}
+		{% endblock %}
+	</main>
+	<!-- Rodapé -->
+	<footer class="mainFooter">
+		<div>
+			<p>Copyright &copy 2020 - by Arnon Rodrigues<br /><a href="https://twitter.com/arnonrdp"
+					target="_blank">Twitter</a></p>
+		</div>
+	</footer>
+
+	<!-- LOADER -->
+	<script src="static/script.js"></script>
 </body>
 
 </html>

@@ -1,13 +1,13 @@
-{% extends "layout.html" %}
-
 {% block style %}
 <style>
   body {
+    height: 100vh;
+    font-family: 'SF Pro', sans-serif;
     background-image: url(static/img/bg_login.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top center;
-    height: 100vh;
+    text-align: center;
   }
 
   header {
@@ -15,7 +15,7 @@
   }
 
   header h1 {
-    mix-blend-mode: color-dodge;
+    mix-blend-mode: soft-light;
   }
 
   main section {
@@ -23,7 +23,6 @@
     margin: auto;
     padding: 1em;
     background-color: #e6e7ee;
-    ;
     border-radius: 6px;
   }
 
@@ -106,9 +105,9 @@
     </form>
 
     <form id='Registrar' class="tabcontent" action="/register" method='post'>
-      <input type="email" name="username" placeholder="E-mail" autocomplete="off" required>
-      <input type="password" name="password" placeholder="Senha" autocomplete="off" required>
-      <input type="password" name="confirmation" placeholder="Confirmar Senha" autocomplete="off" required>
+      <input type="email" name="username" placeholder="E-mail" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <input type="password" name="confirmation" placeholder="Confirmar Senha" required>
       <button type='submit'>Registrar</button>
     </form>
 

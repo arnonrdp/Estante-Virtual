@@ -44,12 +44,18 @@ def index():
     return render_template('index.html')
 
 
+@app.route("/search")
+@login_required
+def add():
+    return render_template('search.html')
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
 
     # Forget any user_id
-    # session.clear()
+    session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -86,6 +92,26 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+
+@app.route("/lookup", methods=["GET", "POST"])
+@login_required
+def search():
+    """Get book search."""
+    if request.method == "POST":
+        result_check = is_provided("search")
+        if result_check is not None:
+            return result_check
+        search = request.form.get("search").upper()
+        search = lookup(search)
+        if search is None:
+            return "invalid search"
+        return render_template("search.html", search={
+            'totalItems': search['totalItems'],
+            'items': search['items']
+        })
+    else:
+        return render_template("/")
 
 
 @app.route("/register", methods=["GET", "POST"])

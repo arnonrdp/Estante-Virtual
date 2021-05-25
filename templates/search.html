@@ -1,0 +1,6 @@
+{% extends "index.html" %}
+
+{% block search %}
+<p>Encontrado: {{search['totalItems']}} livros</p>
+<p>{{search['items']}}</p>
+{% endblock %}

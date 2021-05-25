@@ -33,13 +33,11 @@ def login_required(f):
     return decorated_function
 
 
-def lookup(symbol):
-    """Look up quote for symbol."""
-
+def lookup(search):
+    """Look up search for books."""
     # Contact API
     try:
-        api_key = os.environ.get("API_KEY")
-        url = f"https://cloud.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token={api_key}"
+        url = f'https://www.googleapis.com/books/v1/volumes?q={search}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
         response = requests.get(url)
         response.raise_for_status()
     except requests.RequestException:
@@ -47,11 +45,10 @@ def lookup(symbol):
 
     # Parse response
     try:
-        quote = response.json()
+        search = response.json()
         return {
-            "name": quote["companyName"],
-            "price": float(quote["latestPrice"]),
-            "symbol": quote["symbol"]
+            "totalItems": int(search["totalItems"]),
+            "items": search["items"][0]['volumeInfo']['authors']
         }
     except (KeyError, TypeError, ValueError):
         return None
