@@ -48,7 +48,9 @@ def lookup(search):
         search = response.json()
         return {
             "totalItems": int(search["totalItems"]),
-            "items": search["items"][0]['volumeInfo']['authors']
+            "items": search["items"]
+            # "authors": search["items"][0]['volumeInfo']['authors']
+            # "thumbnail": search["items"][1]['volumeInfo']['imageLinks']['thumbnail']
         }
     except (KeyError, TypeError, ValueError):
         return None

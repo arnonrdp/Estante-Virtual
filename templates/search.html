@@ -1,6 +1,28 @@
 {% extends "index.html" %}
 
 {% block search %}
-<p>Encontrado: {{search['totalItems']}} livros</p>
-<p>{{search['items']}}</p>
+
+<p>Total Items: {{search['totalItems']}}</p>
+
+<img src="{{search['items'][0]['volumeInfo']['imageLinks']['thumbnail']}}">
+<p>Título: {{search['items'][0]['volumeInfo']['title']}}</p>
+
+<p>Autor(a): {{search['items'][0]['volumeInfo']['authors']}}</p>
+
+<p>Descrição: {{search['items'][0]['volumeInfo']['description']}}</p>
+
+<div id="content"></div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+  function handleResponse(response) {
+    for (var i = 0; i < response.items.length; i++) {
+      var item = response.items[i];
+      // in production code, item.text should have the HTML entities escaped.
+      document.getElementById("content").innerHTML += "<br>" + item.volumeInfo.title;
+    }
+  }
+</script>
 {% endblock %}

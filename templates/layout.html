@@ -20,20 +20,15 @@
 	<!-- Barra Lateral -->
 	<aside class="mainAside tab">
 		<ul>
-			<li><a class="tablinks" onclick="alternar(event, 'Início')" id="defaultOpen">
-					<img src="static/img/books.svg"></img><br>Início</a></li>
-			<li><a class="tablinks" onclick="alternar(event, 'Adicionar')">
-					<img src="static/img/search.svg"></img><br>Adicionar</a></li>
-			<li><a class="tablinks" onclick="alternar(event, 'Amigos')">
-					<img src="static/img/people.svg"></img><br>Amigos</a></li>
-			<li><a class="tablinks" onclick="alternar(event, 'Ajustes')">
-					<img src="static/img/settings.svg"></img><br>Ajustes</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Início')" id="defaultOpen"><img src="static/img/books.svg"></img><br>Início</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Adicionar')"><img src="static/img/search.svg"></img><br>Adicionar</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Amigos')"><img src="static/img/people.svg"></img><br>Amigos</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Ajustes')"><img src="static/img/settings.svg"></img><br>Ajustes</a></li>
 		</ul>
 	</aside>
 
 	<main>
-		{% block main %}
-		{% endblock %}
+		{% block main %}{% endblock %}
 	</main>
 	<!-- Rodapé -->
 	<footer class="mainFooter">
@@ -45,6 +40,7 @@
 
 	<!-- LOADER -->
 	<script src="static/script.js"></script>
+	{% block script %}{% endblock %}
 </body>
 
 </html>

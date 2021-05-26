@@ -105,10 +105,13 @@ def search():
         search = request.form.get("search").upper()
         search = lookup(search)
         if search is None:
-            return "invalid search"
+            return "Pesquisa Inválida"
         return render_template("search.html", search={
             'totalItems': search['totalItems'],
             'items': search['items']
+            # "title": search["title"],
+            # 'authors': search['authors'],
+            # 'thumbnail': search['thumbnail']
         })
     else:
         return render_template("/")
