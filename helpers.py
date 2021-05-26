@@ -49,8 +49,6 @@ def lookup(search):
         return {
             "totalItems": int(search["totalItems"]),
             "items": search["items"]
-            # "authors": search["items"][0]['volumeInfo']['authors']
-            # "thumbnail": search["items"][1]['volumeInfo']['imageLinks']['thumbnail']
         }
     except (KeyError, TypeError, ValueError):
         return None

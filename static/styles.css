@@ -159,6 +159,14 @@ main {
 	border: 0.5px solid #D1D9E6;
 	box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
 }
+#result {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+#result figure {
+	width: 10em;
+}
 /* FORMATAÇÃO DA ABA AMIGOS */
 section#Amigos {
 	justify-content: center;

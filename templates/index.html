@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<!-- Conteúdo Principal -->
 <article class="mainContent">
 
   <!-- Estante Principal -->
@@ -121,11 +120,12 @@
 
   <!-- Aba Adicionar -->
   <section id="Adicionar" class="tabcontent">
-    <form action='/lookup' method="post">
-      <input type="text" name="search" placeholder="Digite um título ou autor...">
+    <form>
+      <input type="text" id="search" placeholder="Pesquise por título, autor, editora, lançamento, ISBN...">
       <button type="submit">Buscar</button>
-      {% block search %}{% endblock %}
     </form>
+    {% block search %}{% endblock %}
+    <div id="result"></div>
     <br>
     <button type="button" onclick="addLivro()">Adicionar Livro</button>
   </section>
@@ -148,4 +148,42 @@
     </div>
   </section>
 </article>
+{% endblock %}
+
+{% block script %}
+<script>
+  var result = document.getElementById("result");
+  function handleResponse(response) {
+    for (var i = 0; i < response.items.length; i++) {
+      var item = response.items[i];
+      // Criar elementos
+      figure = document.createElement("figure");
+      img = document.createElement("img");
+      figcap = document.createElement("figcaption")
+      // Receber dados do JSON
+      try {
+        cover = item.volumeInfo.imageLinks.thumbnail;
+        title = item.volumeInfo.title;
+        author = item.volumeInfo.authors;
+      } catch (error) {
+        
+      } finally {
+      // Atribuir valores aos elementos e insere no HTML
+      result.appendChild(figure);
+      img.src = cover;
+      figure.appendChild(img);
+      figcap.innerHTML += `${title}<br>${author}`;
+      figure.appendChild(figcap);
+      }
+    }
+  }
+  document.querySelector("form").addEventListener("submit", function(e) {
+    result.innerHTML = "";
+    search = document.getElementById("search").value;
+    var script = document.createElement("script");
+    script.src = `https://www.googleapis.com/books/v1/volumes?q=${search}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ&callback=handleResponse`;
+    document.body.appendChild(script);
+    e.preventDefault();
+  });
+</script>
 {% endblock %}

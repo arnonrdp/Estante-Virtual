@@ -108,10 +108,8 @@ def search():
             return "Pesquisa Inválida"
         return render_template("search.html", search={
             'totalItems': search['totalItems'],
-            'items': search['items']
-            # "title": search["title"],
-            # 'authors': search['authors'],
-            # 'thumbnail': search['thumbnail']
+            'title': search['title'],
+            'authors': search['authors']
         })
     else:
         return render_template("/")

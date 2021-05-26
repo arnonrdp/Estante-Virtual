@@ -1,4 +1,5 @@
 {% block style %}
+<link rel="shortcut icon" href="static/favicon.svg" type="image/svg">
 <style>
   body {
     height: 100vh;
@@ -105,9 +106,9 @@
     </form>
 
     <form id='Registrar' class="tabcontent" action="/register" method='post'>
-      <input type="email" name="username" placeholder="E-mail" required>
-      <input type="password" name="password" placeholder="Senha" required>
-      <input type="password" name="confirmation" placeholder="Confirmar Senha" required>
+      <input type="email" name="username" placeholder="E-mail" autocomplete="off" required>
+      <input type="password" name="password" placeholder="Senha" autocomplete="off" required>
+      <input type="password" name="confirmation" placeholder="Confirmar Senha" autocomplete="off" required>
       <button type='submit'>Registrar</button>
     </form>
 
