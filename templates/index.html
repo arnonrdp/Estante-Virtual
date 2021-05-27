@@ -5,117 +5,11 @@
 
   <!-- Estante Principal -->
   <section id="Início" class="tabcontent">
-    <figure><a href="#"><img src="../static/capas/livro1.jpg"></a>
-      <figcaption>Harry Potter e a Pedra Filosofal</figcaption>
+    {% for livro in livros %}
+    <figure><a href="#"><img src="{{livro['thumbnail']}}"></a>
+      <figcaption>{{livro["title"]}}</figcaption>
     </figure>
-    <figure><a href="#"><img src="../static/capas/livro2.jpg"></a>
-      <figcaption>Harry Potter e a Câmara Secreta</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro3.jpg"></a>
-      <figcaption>Harry Potter e o Prisioneiro de Azkaban</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro4.jpg"></a>
-      <figcaption>Harry Potter e o Cálice de Fogo</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro5.jpg"></a>
-      <figcaption>Harry Potter e o Enigma do Príncipe</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro6.jpg"></a>
-      <figcaption>Harry Potter e a Ordem da Fênix</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro7.jpg"></a>
-      <figcaption>Harry Potter e as Relíquias da Morte</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro8.jpg"></a>
-      <figcaption>Pai Rico, Pai Pobre</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro9.jpg"></a>
-      <figcaption>Quem Mexeu no Meu Queijo?</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro10.jpg"></a>
-      <figcaption>O Guia do Pão Duro</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro11.jpg"></a>
-      <figcaption>O Guia do Pão Duro 2</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro12.jpg"></a>
-      <figcaption>A Arte da Guerra</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro13.jpg"></a>
-      <figcaption>Steve Jobs</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro14.jpg"></a>
-      <figcaption>50 Tons de Cinza</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro15.jpg"></a>
-      <figcaption>50 Tons Mais Escuros</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro16.jpg"></a>
-      <figcaption>50 Tons de Liberdade</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro17.jpg"></a>
-      <figcaption>A Sabedoria de Tyrion Lannister</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro18.jpg"></a>
-      <figcaption>O Manuscrito Original</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro19.jpg"></a>
-      <figcaption>Criando Bebês</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro20.jpg"></a>
-      <figcaption>Criando Filhos</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro21.jpg"></a>
-      <figcaption>Mais Esperto Que o Diabo</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro22.jpg"></a>
-      <figcaption>Do Mil ao Milhão Sem Cortar o Cafézinho</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro23.jpg"></a>
-      <figcaption>Casais Inteligentes Enriquecem Juntos</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro24.jpg"></a>
-      <figcaption>O Poder do Encantamento</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro25.jpg"></a>
-      <figcaption>O Homem Mais Rico da Babilônia</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro26.jpg"></a>
-      <figcaption>Sapiens</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro27.jpg"></a>
-      <figcaption>Seja Foda!</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro28.jpg"></a>
-      <figcaption>Os Segredos da Mente Milionária</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro29.jpg"></a>
-      <figcaption>O Investidor Inteligente</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro30.jpg"></a>
-      <figcaption>Como Fazer Amigos e Influenciar Pessoas</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro31.jpg"></a>
-      <figcaption>Gente Que Convence</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro32.jpg"></a>
-      <figcaption>Uma Breve História do Tempo</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro33.jpg"></a>
-      <figcaption>Especialista em Pessoas</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro34.jpg"></a>
-      <figcaption>Sonho Grande</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro35.jpg"></a>
-      <figcaption>Como Convencer Alguém em 90 Segundos</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro36.jpg"></a>
-      <figcaption>Elon Musk</figcaption>
-    </figure>
-    <figure><a href="#"><img src="../static/capas/livro37.jpg"></a>
-      <figcaption>As 5 Linguagens do Amor das Crianças</figcaption>
-    </figure>
+    {% endfor %}
   </section>
 
   <!-- Aba Adicionar -->
@@ -124,7 +18,6 @@
       <input type="text" id="search" placeholder="Pesquise por título, autor, editora, lançamento, ISBN..." />
       <button type="submit">Buscar</button>
     </form>
-    {% block search %}{% endblock %}
     <div id="result"></div>
     <br>
     <button type="button" onclick="addLivro()">Adicionar Livro</button>
@@ -153,7 +46,7 @@
 {% block script %}
 <script>
   var result = document.getElementById("result");
-  var cover, title, author;
+  var cover, title, author, book_id;
   function handleResponse(response) {
     for (var i = 0; i < response.items.length; i++) {
       var item = response.items[i];
@@ -167,12 +60,13 @@
         cover = item.volumeInfo.imageLinks.thumbnail;
         title = item.volumeInfo.title;
         author = item.volumeInfo.authors;
+        book_id = item.id;
       } catch (error) {
         continue;
       } finally {
       // Atribui valores aos elementos e insere no HTML
       result.appendChild(figure);
-      add.href = "/add";
+      add.href = `/add/${book_id}`;
       figure.appendChild(add);
       img.src = cover;
       add.appendChild(img);

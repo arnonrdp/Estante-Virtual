@@ -1,3 +1,4 @@
+import requests
 from cs50 import SQL
 from flask import Flask, flash, render_template, redirect, request, session
 from flask_session import Session
@@ -41,13 +42,15 @@ db = SQL("sqlite:///Estante.db")
 @app.route("/")
 @login_required
 def index():
-    return render_template('index.html')
+    livros = db.execute("""
+        SELECT * FROM readingTest WHERE user_id=:user_id
+    """, user_id=session["user_id"])
+    return render_template("index.html", livros = livros)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
     # Forget any user_id
     session.clear()
 
@@ -80,35 +83,38 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
     # Forget any user_id
     session.clear()
-
     # Redirect user to login form
     return redirect("/")
 
 
-@app.route("/lookup")
-@login_required
-def search():
-    return redirect("/")
-
-@app.route("/add")
+@app.route('/add/<book_id>')
 @login_required
 def add(book_id):
     """Atribui o ID de um livro ao ID do usuário"""
-    db.execute("""
-        INSERT INTO reading (user_id, symbol, book_id, price, transacted)
-        VALUES (:user_id, :symbol, :book_id, :price, :transacted)
-        """,
-        user_id = session["user_id"],
-        symbol = "teste1",
-        book_id = book_id,
-        price = 19,
-        transacted = 2021
-    )
-    flash("Adicionado!")
-    return redirect("/")
+    try:
+        url = f'https://www.googleapis.com/books/v1/volumes/{book_id}'
+        response = requests.get(url)
+        response.raise_for_status()
+    except requests.RequestException:
+        return None
+    # Parse response
+    try:
+        search = response.json()
+        db.execute("""
+            INSERT INTO readingTest (user_id, book_id, title, author, thumbnail)
+            VALUES (:user_id, :book_id, :title, :author, :thumbnail)
+            """,
+            user_id = session["user_id"],
+            book_id = book_id,
+            title = search["volumeInfo"]["title"],
+            author = search["volumeInfo"]["authors"],
+            thumbnail = search["volumeInfo"]["imageLinks"]["thumbnail"]
+        )
+        return redirect("/")
+    except (KeyError, TypeError, ValueError):
+        return None
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -118,17 +124,16 @@ def register():
         if result_checks != None:
             return result_checks
         if request.form.get("password") != request.form.get("confirmation"):
-            return "passwords must match"
+            return "As senhas precisam coincidir"
         try:
             prim_key = db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",
                     username=request.form.get("username"),
                     hash=generate_password_hash(request.form.get("password")))
         except:
-            return "registration already exists"
+            return "Este e-mail já está cadastrado"
         if prim_key is None:
-            return "registration error"
+            return "Erro no cadastro"
         session["user_id"] = prim_key
         return redirect("/")
-
     else:
         return render_template("register.html")
