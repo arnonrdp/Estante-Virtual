@@ -1,5 +1,5 @@
 from cs50 import SQL
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, flash, render_template, redirect, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -42,12 +42,6 @@ db = SQL("sqlite:///Estante.db")
 @login_required
 def index():
     return render_template('index.html')
-
-
-@app.route("/search")
-@login_required
-def add():
-    return render_template('search.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -94,25 +88,27 @@ def logout():
     return redirect("/")
 
 
-@app.route("/lookup", methods=["GET", "POST"])
+@app.route("/lookup")
 @login_required
 def search():
-    """Get book search."""
-    if request.method == "POST":
-        result_check = is_provided("search")
-        if result_check is not None:
-            return result_check
-        search = request.form.get("search").upper()
-        search = lookup(search)
-        if search is None:
-            return "Pesquisa Inválida"
-        return render_template("search.html", search={
-            'totalItems': search['totalItems'],
-            'title': search['title'],
-            'authors': search['authors']
-        })
-    else:
-        return render_template("/")
+    return redirect("/")
+
+@app.route("/add")
+@login_required
+def add(book_id):
+    """Atribui o ID de um livro ao ID do usuário"""
+    db.execute("""
+        INSERT INTO reading (user_id, symbol, book_id, price, transacted)
+        VALUES (:user_id, :symbol, :book_id, :price, :transacted)
+        """,
+        user_id = session["user_id"],
+        symbol = "teste1",
+        book_id = book_id,
+        price = 19,
+        transacted = 2021
+    )
+    flash("Adicionado!")
+    return redirect("/")
 
 
 @app.route("/register", methods=["GET", "POST"])

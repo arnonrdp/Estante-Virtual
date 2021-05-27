@@ -153,27 +153,31 @@
 {% block script %}
 <script>
   var result = document.getElementById("result");
+  var cover, title, author;
   function handleResponse(response) {
     for (var i = 0; i < response.items.length; i++) {
       var item = response.items[i];
-      // Criar elementos
+      // Cria elementos
       figure = document.createElement("figure");
+      add = document.createElement("a");
       img = document.createElement("img");
-      figcap = document.createElement("figcaption")
-      // Receber dados do JSON
+      figcap = document.createElement("figcaption");
+      // Recebe dados do JSON
       try {
         cover = item.volumeInfo.imageLinks.thumbnail;
         title = item.volumeInfo.title;
         author = item.volumeInfo.authors;
       } catch (error) {
-        
+        continue;
       } finally {
-      // Atribuir valores aos elementos e insere no HTML
+      // Atribui valores aos elementos e insere no HTML
       result.appendChild(figure);
+      add.href = "/add";
+      figure.appendChild(add);
       img.src = cover;
-      figure.appendChild(img);
+      add.appendChild(img);
       figcap.innerHTML += `${title}<br>${author}`;
-      figure.appendChild(figcap);
+      add.appendChild(figcap);
       }
     }
   }
