@@ -7,7 +7,7 @@
   <section id="Início" class="tabcontent">
     {% for livro in livros %}
     <figure>
-      <a href="#"><img src="{{livro['thumbnail']}}"></a>
+      <a><img src="{{livro['thumbnail']}}"></a>
       <a href="/remove/{{livro['book_id']}}" class="dropdown">REMOVER</a>
       <figcaption>{{livro["title"]}}</figcaption>
     </figure>
@@ -54,7 +54,8 @@
       var item = response.items[i];
       // Cria elementos
       figure = document.createElement("figure");
-      add = document.createElement("a");
+      aEmp = document.createElement("a");
+      aId = document.createElement("a");
       img = document.createElement("img");
       figcap = document.createElement("figcaption");
       // Recebe dados do JSON
@@ -68,12 +69,15 @@
       } finally {
         // Atribui valores aos elementos e insere no HTML
         result.appendChild(figure);
-        add.href = `/add/${book_id}`;
-        figure.appendChild(add);
+        aEmp.appendChild(img);
+        aId.innerHTML = "ADICIONAR";
+        aId.href = `/add/${book_id}`;
+        aId.classList.add("dropdown");
+        figure.appendChild(aId);
+        figure.appendChild(aEmp);
         img.src = cover;
-        add.appendChild(img);
         figcap.innerHTML += `${title}<br>${author}`;
-        add.appendChild(figcap);
+        figure.appendChild(figcap);
       }
     }
   }
