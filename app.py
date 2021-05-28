@@ -1,7 +1,6 @@
-from logging import exception
 import requests
 from cs50 import SQL
-from flask import Flask, flash, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -44,8 +43,9 @@ db = SQL("sqlite:///Estante.db")
 @login_required
 def index():
     livros = db.execute("""
-        SELECT * FROM readingTest WHERE user_id=:user_id
-    """, user_id=session["user_id"])
+        SELECT * FROM readingTest WHERE user_id=:user_id ORDER BY title
+    """, user_id=session["user_id"]
+    )
     return render_template("index.html", livros = livros)
 
 
@@ -113,7 +113,7 @@ def add(book_id):
         )
         return redirect("/")
     except (KeyError, TypeError, ValueError):
-        return None
+        return render_template("index.html")
 
 
 @app.route('/remove/<book_id>')
@@ -127,7 +127,7 @@ def remove(book_id):
         )
         return redirect("/")
     except:
-        return print('deu ruim')
+        return render_template("index.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
