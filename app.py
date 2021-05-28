@@ -1,3 +1,4 @@
+from logging import exception
 import requests
 from cs50 import SQL
 from flask import Flask, flash, render_template, redirect, request, session
@@ -92,29 +93,41 @@ def logout():
 @app.route('/add/<book_id>')
 @login_required
 def add(book_id):
-    """Atribui o ID de um livro ao ID do usuário"""
+    """Atribui um livro ao ID do usuário"""
     try:
         url = f'https://www.googleapis.com/books/v1/volumes/{book_id}'
         response = requests.get(url)
         response.raise_for_status()
     except requests.RequestException:
         return None
-    # Parse response
     try:
         search = response.json()
         db.execute("""
-            INSERT INTO readingTest (user_id, book_id, title, author, thumbnail)
-            VALUES (:user_id, :book_id, :title, :author, :thumbnail)
+            INSERT INTO readingTest (user_id, book_id, title, thumbnail)
+            VALUES (:user_id, :book_id, :title, :thumbnail)
             """,
             user_id = session["user_id"],
             book_id = book_id,
             title = search["volumeInfo"]["title"],
-            author = search["volumeInfo"]["authors"],
             thumbnail = search["volumeInfo"]["imageLinks"]["thumbnail"]
         )
         return redirect("/")
     except (KeyError, TypeError, ValueError):
         return None
+
+
+@app.route('/remove/<book_id>')
+@login_required
+def remove(book_id):
+    """Remove um livro do ID do usuário"""
+    try:
+        db.execute("""
+            DELETE FROM readingTest WHERE book_id LIKE :book_id;""",
+            book_id = book_id
+        )
+        return redirect("/")
+    except:
+        return print('deu ruim')
 
 
 @app.route("/register", methods=["GET", "POST"])
