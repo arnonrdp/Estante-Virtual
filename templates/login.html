@@ -1,4 +1,7 @@
-{% block style %}
+{% block head %}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">	
 <link rel="shortcut icon" href="static/favicon.svg" type="image/svg">
 <style>
   body {
@@ -12,7 +15,7 @@
   }
 
   header {
-    padding: 5em 0;
+    padding: 3em 0;
   }
 
   header h1 {
@@ -100,13 +103,14 @@
     </ul>
 
     <form id='Entrar' class="tabcontent" action="/login" method='post'>
-      <input type="email" name="username" placeholder="E-mail" autocomplete="on" autofocus required>
+      <input type="email" name="email" placeholder="E-mail" autocomplete="on" autofocus required>
       <input type="password" name="password" placeholder="Senha" autocomplete="on" required>
       <button type='submit'>Login</button>
     </form>
 
     <form id='Registrar' class="tabcontent" action="/register" method='post'>
-      <input type="email" name="username" placeholder="E-mail" autocomplete="on" required>
+      <input type="text" name="first_name" placeholder="Nome" autocomplete="on">
+      <input type="email" name="email" placeholder="E-mail" autocomplete="on" required>
       <input type="password" name="password" placeholder="Senha" autocomplete="on" required>
       <input type="password" name="confirmation" placeholder="Confirmar Senha" autocomplete="on" required>
       <button type='submit'>Registrar</button>

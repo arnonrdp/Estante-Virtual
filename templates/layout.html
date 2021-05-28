@@ -7,14 +7,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="static/styles.css">
 	<link rel="shortcut icon" href="static/favicon.svg" type="image/svg">
-	{% block style %}{% endblock %}
+	{% block head %}{% endblock %}
 	<title>Minha Estante Virtual</title>
 </head>
 
 <body>
 	<!-- Cabeçalho -->
 	<header class="mainHeader">
-		<h1><span>Estante do Arnon</span></h1>
+		{% if first_name %}
+		<h1><span>Estante: {{ first_name }}</span></h1>
+		{% else %}
+    <h1><span>Sua Estante</span></h1>
+    {% endif %}
 	</header>
 
 	<!-- Barra Lateral -->
