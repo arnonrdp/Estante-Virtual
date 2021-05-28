@@ -6,7 +6,9 @@
   <!-- Estante Principal -->
   <section id="Início" class="tabcontent">
     {% for livro in livros %}
-    <figure><a href="#"><img src="{{livro['thumbnail']}}"></a>
+    <figure>
+      <a href="#"><img src="{{livro['thumbnail']}}"></a>
+      <a href="/remove/{{livro['book_id']}}" class="dropdown">REMOVER</a>
       <figcaption>{{livro["title"]}}</figcaption>
     </figure>
     {% endfor %}
@@ -64,18 +66,18 @@
       } catch (error) {
         continue;
       } finally {
-      // Atribui valores aos elementos e insere no HTML
-      result.appendChild(figure);
-      add.href = `/add/${book_id}`;
-      figure.appendChild(add);
-      img.src = cover;
-      add.appendChild(img);
-      figcap.innerHTML += `${title}<br>${author}`;
-      add.appendChild(figcap);
+        // Atribui valores aos elementos e insere no HTML
+        result.appendChild(figure);
+        add.href = `/add/${book_id}`;
+        figure.appendChild(add);
+        img.src = cover;
+        add.appendChild(img);
+        figcap.innerHTML += `${title}<br>${author}`;
+        add.appendChild(figcap);
       }
     }
   }
-  document.querySelector("form").addEventListener("submit", function(e) {
+  document.querySelector("form").addEventListener("submit", function (e) {
     result.innerHTML = "";
     search = document.getElementById("search").value;
     var script = document.createElement("script");
