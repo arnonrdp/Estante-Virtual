@@ -33,7 +33,7 @@ Session(app)
 
 def is_provided(field):
      if not request.form.get(field):
-        return f"must provide {field}"
+        return f"Faltou informar: {field}"
 
 # Configure Library to use SQLite database
 db = SQL("sqlite:///Estante.db")
@@ -42,11 +42,20 @@ db = SQL("sqlite:///Estante.db")
 @app.route("/")
 @login_required
 def index():
+    # Consulta o Primeiro Nome do usuário para exibir no título
+    names = db.execute("""
+        SELECT first_name FROM users WHERE id=:user_id
+        """,
+        user_id = session["user_id"]
+    )
+    first_name = names[0]["first_name"] if names else None
+# Consulta a DB para organizar a estante de livros
     livros = db.execute("""
         SELECT * FROM readingTest WHERE user_id=:user_id ORDER BY title
-    """, user_id=session["user_id"]
+        """,
+        user_id = session["user_id"]
     )
-    return render_template("index.html", livros = livros)
+    return render_template("index.html", livros = livros, first_name = first_name)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -58,20 +67,21 @@ def login():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        # Ensure username and password was submitted
-        result_checks = is_provided("username") or is_provided("password")
+        # Ensure email and password was submitted
+        result_checks = is_provided("email") or is_provided("password")
         if result_checks is not None:
             return result_checks
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        # Query database for email
+        rows = db.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
 
-        # Ensure username exists and password is correct
+        # Ensure email exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return "invalid username and/or password"
+            return "E-mail ou Senha inválidos"
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        session["email"] = request.form.get("email")
 
         # Redirect user to home page
         return redirect("/")
@@ -133,15 +143,17 @@ def remove(book_id):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        result_checks = is_provided("username") or is_provided("password") or is_provided("confirmation")
+        result_checks = is_provided("email") or is_provided("password") or is_provided("confirmation")
         if result_checks != None:
             return result_checks
         if request.form.get("password") != request.form.get("confirmation"):
             return "As senhas precisam coincidir"
         try:
-            prim_key = db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",
-                    username=request.form.get("username"),
-                    hash=generate_password_hash(request.form.get("password")))
+            prim_key = db.execute("INSERT INTO users (email, hash, first_name) VALUES (:email, :hash, :first_name)",
+                    email=request.form.get("email"),
+                    hash=generate_password_hash(request.form.get("password")),
+                    first_name=request.form.get("first_name")
+            )
         except:
             return "Este e-mail já está cadastrado"
         if prim_key is None:
@@ -149,4 +161,4 @@ def register():
         session["user_id"] = prim_key
         return redirect("/")
     else:
-        return render_template("register.html")
+        return render_template("login.html")
