@@ -1,10 +1,6 @@
 
 .DS_Store
-.vscode/settings.json
-__pycache__/app.cpython-39.pyc
 -- SQLite.md
-Estante.db
 templates/backupEstanteArnon.html
 templates/estante.html
-
 .vercel
