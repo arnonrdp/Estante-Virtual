@@ -6,3 +6,5 @@ __pycache__/app.cpython-39.pyc
 Estante.db
 templates/backupEstanteArnon.html
 templates/estante.html
+
+.vercel
