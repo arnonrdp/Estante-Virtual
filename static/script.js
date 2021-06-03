@@ -26,27 +26,3 @@ captionAlt = document.getElementsByTagName('figcaption');
 for (iAlt = 0; iAlt < imgAlt.length; iAlt++) {
     imgAlt[iAlt].alt = `Livro ${captionAlt[iAlt].innerHTML}`
 }
-
-
-
-
-// TESTE DE ELEMENTOS FILHO - SÓ DEVE FUNCIONAR COM CLIQUE EM BOTÃO DE +
-function addLivro() {
-
-    let figureCreate, aCreate, imgCreate, figcaptionCreate
-    figureCreate = document.createElement('figure')
-    aCreate = document.createElement('a')
-    imgCreate = document.createElement('img')
-    figcaptionCreate = document.createElement('figcaption')
-
-    aCreate.href = "#" // Precisa ser definido
-    imgCreate.src = "../static/capas/sem-capa.jpg" // Precisa ser definido
-    figcaptionCreate.innerHTML = `${iAlt++}` // Precisa ser definido
-    imgCreate.alt = `Livro ${figcaptionCreate.innerHTML}` // Inserção de texto alternativo nas <img> 
-
-    // Necessário código para receber a url e a img do livro a ser adicionado
-
-    document.getElementById('Início').appendChild(figureCreate).appendChild(aCreate).appendChild(imgCreate)
-    document.getElementById('Início').appendChild(figureCreate).appendChild(figcaptionCreate)
-}
-

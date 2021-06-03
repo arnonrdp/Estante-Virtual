@@ -100,6 +100,31 @@ def logout():
     return redirect("/")
 
 
+@app.route('/search', methods=["GET", "POST"])
+@login_required
+def search():
+    """Pesquisa um livro utilizando a API do Google Books"""
+    if request.method == "POST":
+        try:
+            seek = request.form.get("seek")
+            url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.RequestException:
+            return None
+        # Parse response
+        try:
+            search = response.json()
+            search = {
+                "items": search["items"]
+            }
+            return render_template("search.html", search=search)
+        except (KeyError, TypeError, ValueError):
+            return None
+    else:
+        return render_template("index.html")
+
+
 @app.route('/add/<book_id>')
 @login_required
 def add(book_id):

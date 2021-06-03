@@ -33,16 +33,15 @@ def login_required(f):
     return decorated_function
 
 
-def lookup(search):
+def lookup(book_search):
     """Look up search for books."""
     # Contact API
     try:
-        url = f'https://www.googleapis.com/books/v1/volumes?q={search}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
+        url = f'https://www.googleapis.com/books/v1/volumes?q={book_search}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
         response = requests.get(url)
         response.raise_for_status()
     except requests.RequestException:
         return None
-
     # Parse response
     try:
         search = response.json()

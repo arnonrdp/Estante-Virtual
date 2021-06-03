@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<p>Hello Search!</p>
+<section id="Adicionar" class="tabcontent">
+  <div id="result">
+    {% for seek in search['items'] %}
+    <figure>
+      <a href="/add/{{ seek.id }}" class="dropdown">ADICIONAR</a>
+      <a><img src="{{ seek.volumeInfo.imageLinks.thumbnail }}"></a>
+      <figcaption>{{ seek.volumeInfo.title }}<br>{{ seek.volumeInfo.authors }}</figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}
