@@ -2,6 +2,5 @@
 .DS_Store
 -- SQLite.md
 templates/backupEstanteArnon.html
-templates/estante.html
 .vercel
 requirements.txt
