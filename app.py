@@ -106,7 +106,7 @@ def search():
     """Pesquisa um livro utilizando a API do Google Books"""
     if request.method == "POST":
         try:
-            seek = request.form.get("seek")
+            seek = request.form.get("seek").replace(' ', '+')
             url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
             response = requests.get(url)
             response.raise_for_status()
@@ -115,10 +115,15 @@ def search():
         # Parse response
         try:
             search = response.json()
-            search = {
-                "items": search["items"]
-            }
-            return render_template("search.html", search=search)
+            seek = search['items']
+            infobooks = []
+            for i in range(len(seek)):
+                infobooks.append({"book_id": seek[i]['id'],
+                                  "thumbnail": seek[i]['volumeInfo']['imageLinks']['thumbnail'],
+                                  "title": seek[i]['volumeInfo']['title'],
+                                  "authors": seek[i]['volumeInfo']['authors']
+                })
+            return render_template("search.html", infobooks = infobooks)
         except (KeyError, TypeError, ValueError):
             return None
     else:
