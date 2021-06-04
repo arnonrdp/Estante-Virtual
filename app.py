@@ -32,8 +32,9 @@ Session(app)
 
 
 def is_provided(field):
-     if not request.form.get(field):
+    if not request.form.get(field):
         return f"Faltou informar: {field}"
+
 
 # Configure Library to use SQLite database
 db = SQL("sqlite:///Estante.db")
@@ -46,16 +47,16 @@ def index():
     names = db.execute("""
         SELECT first_name FROM users WHERE id=:user_id
         """,
-        user_id = session["user_id"]
-    )
+                       user_id=session["user_id"]
+                       )
     first_name = names[0]["first_name"] if names else None
 # Consulta a DB para organizar a estante de livros
     livros = db.execute("""
         SELECT * FROM readingTest WHERE user_id=:user_id ORDER BY title
         """,
-        user_id = session["user_id"]
-    )
-    return render_template("index.html", livros = livros, first_name = first_name)
+                        user_id=session["user_id"]
+                        )
+    return render_template("index.html", livros=livros, first_name=first_name)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -73,7 +74,8 @@ def login():
             return result_checks
 
         # Query database for email
-        rows = db.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
+        rows = db.execute("SELECT * FROM users WHERE email = ?",
+                          request.form.get("email"))
 
         # Ensure email exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
@@ -107,7 +109,7 @@ def search():
     if request.method == "POST":
         while True:
             try:
-                seek = request.form.get("seek").replace(' ', '+')
+                seek = request.form.get("seek")
                 url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
                 response = requests.get(url)
                 response.raise_for_status()
@@ -121,7 +123,7 @@ def search():
                         "title": seek[i]['volumeInfo']['title'],
                         "authors": seek[i]['volumeInfo']['authors']
                     })
-                return render_template("index.html", infobooks = infobooks)
+                return render_template("index.html", infobooks=infobooks)
             except (requests.RequestException, KeyError, TypeError, ValueError):
                 continue
     else:
@@ -144,11 +146,11 @@ def add(book_id):
             INSERT INTO readingTest (user_id, book_id, title, thumbnail)
             VALUES (:user_id, :book_id, :title, :thumbnail)
             """,
-            user_id = session["user_id"],
-            book_id = book_id,
-            title = search["volumeInfo"]["title"],
-            thumbnail = search["volumeInfo"]["imageLinks"]["thumbnail"]
-        )
+                   user_id=session["user_id"],
+                   book_id=book_id,
+                   title=search["volumeInfo"]["title"],
+                   thumbnail=search["volumeInfo"]["imageLinks"]["thumbnail"]
+                   )
         return redirect("/")
     except (KeyError, TypeError, ValueError):
         return render_template("index.html")
@@ -161,8 +163,8 @@ def remove(book_id):
     try:
         db.execute("""
             DELETE FROM readingTest WHERE book_id LIKE :book_id;""",
-            book_id = book_id
-        )
+                   book_id=book_id
+                   )
         return redirect("/")
     except:
         return render_template("index.html")
@@ -171,17 +173,19 @@ def remove(book_id):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        result_checks = is_provided("email") or is_provided("password") or is_provided("confirmation")
+        result_checks = is_provided("email") or is_provided(
+            "password") or is_provided("confirmation")
         if result_checks != None:
             return result_checks
         if request.form.get("password") != request.form.get("confirmation"):
             return "As senhas precisam coincidir"
         try:
             prim_key = db.execute("INSERT INTO users (email, hash, first_name) VALUES (:email, :hash, :first_name)",
-                    email=request.form.get("email"),
-                    hash=generate_password_hash(request.form.get("password")),
-                    first_name=request.form.get("first_name")
-            )
+                                  email=request.form.get("email"),
+                                  hash=generate_password_hash(
+                                      request.form.get("password")),
+                                  first_name=request.form.get("first_name")
+                                  )
         except:
             return "Este e-mail já está cadastrado"
         if prim_key is None:
