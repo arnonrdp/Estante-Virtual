@@ -20,8 +20,15 @@
       <input type="text" id="search" name="seek" placeholder="Pesquise por título, autor, editora, lançamento, ISBN..." />
       <button type="submit">Buscar</button>
     </form>
-    <iframe src="/search"></iframe>
-    <div id="result"></div>
+    <div id="result">
+      {% for infobook in infobooks %}
+      <figure>
+        <a href="/add/{{ infobook['book_id'] }}" class="dropdown">ADICIONAR</a>
+        <a><img src="{{ infobook['thumbnail'] }}"></a>
+        <figcaption>{{ infobook['title'] }}<br>{{ infobook['authors'] }}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
   </section>
 
   <!-- Aba Amigos -->
@@ -42,53 +49,4 @@
     </div>
   </section>
 </article>
-{% endblock %}
-
-{% block script %}
-<script>
-  /*
-  var result = document.getElementById("result");
-  var cover, title, author, book_id;
-  function handleResponse(response) {
-    for (var i = 0; i < response.items.length; i++) {
-      var item = response.items[i];
-      // Cria elementos
-      figure = document.createElement("figure");
-      aEmp = document.createElement("a");
-      aId = document.createElement("a");
-      img = document.createElement("img");
-      figcap = document.createElement("figcaption");
-      // Recebe dados do JSON
-      try {
-        cover = item.volumeInfo.imageLinks.thumbnail;
-        title = item.volumeInfo.title;
-        author = item.volumeInfo.authors;
-        book_id = item.id;
-      } catch (error) {
-        continue;
-      } finally {
-        // Atribui valores aos elementos e insere no HTML
-        result.appendChild(figure);
-        aEmp.appendChild(img);
-        aId.innerHTML = "ADICIONAR";
-        aId.href = `/add/${book_id}`;
-        aId.classList.add("dropdown");
-        figure.appendChild(aId);
-        figure.appendChild(aEmp);
-        img.src = cover;
-        figcap.innerHTML += `${title}<br>${author}`;
-        figure.appendChild(figcap);
-      }
-    }
-  }
-  document.querySelector("form").addEventListener("submit", function (e) {
-    result.innerHTML = "";
-    search = document.getElementById("search").value;
-    var script = document.createElement("script");
-    script.src = `https://www.googleapis.com/books/v1/volumes?q=${search}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ&callback=handleResponse`;
-    document.body.appendChild(script);
-    e.preventDefault();
-  });
-  */
-</script>
 {% endblock %}
