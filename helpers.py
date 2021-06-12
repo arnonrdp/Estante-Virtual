@@ -34,7 +34,7 @@ def login_required(f):
 
 
 def lookup(book_search):
-    """Look up search for books."""
+    """Look up search for books using Google API."""
     # Contact API
     try:
         url = f'https://www.googleapis.com/books/v1/volumes?q={book_search}&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
