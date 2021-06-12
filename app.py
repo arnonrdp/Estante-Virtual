@@ -108,7 +108,7 @@ def search():
     """Pesquisa um livro utilizando a API do Google Books"""
     if request.method == "POST":
         seek = request.form.get("seek")
-        url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&maxResults=40'
+        url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&maxResults=40&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
         response = requests.get(url)
         response.raise_for_status()
         results = response.json().get('items', [])
