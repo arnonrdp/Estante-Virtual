@@ -1,6 +1,7 @@
 
+venv
 .DS_Store
 -- SQLite.md
 templates/backupEstanteArnon.html
 .vercel
-requirements.txt
+bizu.txt
