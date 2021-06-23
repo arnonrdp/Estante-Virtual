@@ -62,9 +62,6 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-    # Forget any user_id
-    session.clear()
-
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -87,7 +84,7 @@ def login():
 
         # Redirect user to home page
         return redirect("/")
-
+        
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
@@ -106,13 +103,18 @@ def logout():
 @login_required
 def search():
     """Pesquisa um livro utilizando a API do Google Books"""
+    livros = db.execute("""
+        SELECT * FROM readingTest WHERE user_id=:user_id ORDER BY title
+        """,
+                        user_id=session["user_id"]
+                        )
+    infobooks = []
     if request.method == "POST":
         seek = request.form.get("seek")
         url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&maxResults=40&key=AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
         response = requests.get(url)
         response.raise_for_status()
         results = response.json().get('items', [])
-        infobooks = []
         no_image = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png'
         for result in results:
             info = result.get('volumeInfo', {})
@@ -124,10 +126,8 @@ def search():
                 "title": info.get('title'),
                 "authors": info.get('authors')
             })
-        return render_template("index.html", infobooks=infobooks)
-    else:
-        return render_template("index.html")
-
+    return render_template("index.html", infobooks=infobooks, livros=livros)
+    
 
 @app.route('/add/<book_id>')
 @login_required
