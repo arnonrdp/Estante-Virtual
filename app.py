@@ -46,16 +46,14 @@ def index():
     # Consulta o Primeiro Nome do usuário para exibir no título
     names = db.execute("""
         SELECT first_name FROM users WHERE id=:user_id
-        """,
-                       user_id=session["user_id"]
-                       )
+        """, user_id=session["user_id"]
+        )
     first_name = names[0]["first_name"] if names else None
 # Consulta a DB para organizar a estante de livros
     livros = db.execute("""
         SELECT * FROM readingTest WHERE user_id=:user_id ORDER BY title
-        """,
-                        user_id=session["user_id"]
-                        )
+        """, user_id=session["user_id"]
+        )
     return render_template("index.html", livros=livros, first_name=first_name)
 
 
@@ -71,8 +69,7 @@ def login():
             return result_checks
 
         # Query database for email
-        rows = db.execute("SELECT * FROM users WHERE email = ?",
-                          request.form.get("email"))
+        rows = db.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
 
         # Ensure email exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
@@ -84,7 +81,7 @@ def login():
 
         # Redirect user to home page
         return redirect("/")
-        
+
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
@@ -105,9 +102,8 @@ def search():
     """Pesquisa um livro utilizando a API do Google Books"""
     livros = db.execute("""
         SELECT * FROM readingTest WHERE user_id=:user_id ORDER BY title
-        """,
-                        user_id=session["user_id"]
-                        )
+        """, user_id=session["user_id"]
+        )
     infobooks = []
     if request.method == "POST":
         seek = request.form.get("seek")
@@ -161,9 +157,9 @@ def remove(book_id):
     """Remove um livro do ID do usuário"""
     try:
         db.execute("""
-            DELETE FROM readingTest WHERE book_id LIKE :book_id;""",
-                   book_id=book_id
-                   )
+            DELETE FROM readingTest WHERE book_id LIKE :book_id;
+            """, book_id=book_id
+            )
         return redirect("/")
     except:
         return render_template("index.html")
