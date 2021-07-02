@@ -61,30 +61,27 @@ def index():
 def login():
     """Log user in"""
     # User reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-
-        # Ensure email and password was submitted
-        result_checks = is_provided("email") or is_provided("password")
-        if result_checks is not None:
-            return result_checks
-
-        # Query database for email
-        rows = db.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
-
-        # Ensure email exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return "E-mail ou Senha inválidos"
-
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-        session["email"] = request.form.get("email")
-
-        # Redirect user to home page
-        return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
+    if request.method != "POST":
         return render_template("login.html")
+        
+    # Ensure email and password was submitted
+    result_checks = is_provided("email") or is_provided("password")
+    if result_checks is not None:
+        return result_checks
+
+    # Query database for email
+    rows = db.execute("SELECT * FROM users WHERE email = ?", request.form.get("email"))
+
+    # Ensure email exists and password is correct
+    if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        return "E-mail ou Senha inválidos"
+
+    # Remember which user has logged in
+    session["user_id"] = rows[0]["id"]
+    session["email"] = request.form.get("email")
+
+    # Redirect user to home page
+    return redirect("/")
 
 
 @app.route("/logout")
@@ -116,12 +113,15 @@ def search():
             info = result.get('volumeInfo', {})
             imageLinks = info.get("imageLinks", {})
             thumbs = imageLinks.get('thumbnail')
-            infobooks.append({
-                "book_id": result.get('id'),
-                "thumbnail": thumbs if thumbs else no_image,
-                "title": info.get('title'),
-                "authors": info.get('authors')
-            })
+            infobooks.append(
+                {
+                    "book_id": result.get('id'),
+                    "thumbnail": thumbs or no_image,
+                    "title": info.get('title'),
+                    "authors": info.get('authors'),
+                }
+            )
+
     return render_template("index.html", infobooks=infobooks, livros=livros)
     
 
@@ -167,25 +167,23 @@ def remove(book_id):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-        result_checks = is_provided("email") or is_provided(
-            "password") or is_provided("confirmation")
-        if result_checks != None:
-            return result_checks
-        if request.form.get("password") != request.form.get("confirmation"):
-            return "As senhas precisam coincidir"
-        try:
-            prim_key = db.execute("INSERT INTO users (email, hash, first_name) VALUES (:email, :hash, :first_name)",
-                                  email=request.form.get("email"),
-                                  hash=generate_password_hash(
-                                      request.form.get("password")),
-                                  first_name=request.form.get("first_name")
-                                  )
-        except:
-            return "Este e-mail já está cadastrado"
-        if prim_key is None:
-            return "Erro no cadastro"
-        session["user_id"] = prim_key
-        return redirect("/")
-    else:
+    if request.method != "POST":
         return render_template("login.html")
+    result_checks = is_provided("email") or is_provided(
+        "password") or is_provided("confirmation")
+    if result_checks != None:
+        return result_checks
+    if request.form.get("password") != request.form.get("confirmation"):
+        return "As senhas precisam coincidir"
+    try:
+        prim_key = db.execute("INSERT INTO users (email, hash, first_name) VALUES (:email, :hash, :first_name)",
+                              email=request.form.get("email"),
+                              hash=generate_password_hash(
+                                  request.form.get("password")),
+                              first_name=request.form.get("first_name"))
+    except:
+        return "Este e-mail já está cadastrado"
+    if prim_key is None:
+        return "Erro no cadastro"
+    session["user_id"] = prim_key
+    return redirect("/")
