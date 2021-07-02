@@ -1,5 +1,5 @@
 // FUNÇÃO RESPONSÁVEL PELAS ABAS DA BARRA LATERAL
-function alternar(evt, tagName, element=null) {
+function alternar(evt, tagName, element = null) {
     // Declaração de todas as variáveis
     var i, tabcontent, tablinks;
     // Recebe todos os elementos com a class="tabcontent" e oculta
@@ -32,8 +32,8 @@ for (iAlt = 0; iAlt < imgAlt.length; iAlt++) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function(event) {
-    if(window.location.pathname === '/search'){
+document.addEventListener("DOMContentLoaded", function (event) {
+    if (window.location.pathname === '/search') {
         let element = document.querySelectorAll(".mainAside ul li")[1].childNodes[0];
         alternar(null, "Adicionar", element);
     }
