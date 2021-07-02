@@ -1,7 +1,11 @@
-
+# dependencies
 venv
+
+# misc
 .DS_Store
+bizu.txt
 -- SQLite.md
 templates/backupEstanteArnon.html
+
+# vercel
 .vercel
-bizu.txt
