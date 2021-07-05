@@ -14,8 +14,8 @@
 <body>
 	<!-- Cabeçalho -->
 	<header class="mainHeader">
-		{% if first_name %}
-		<h1><span>Estante: {{ first_name }}</span></h1>
+		{% if session.name %}
+		<h1><span>Estante: {{ session.name }}</span></h1>
 		{% else %}
     <h1><span>Sua Estante</span></h1>
     {% endif %}
@@ -38,8 +38,7 @@
 	<!-- Rodapé -->
 	<footer class="mainFooter">
 		<div>
-			<p>Copyright &copy 2020 - by Arnon Rodrigues<br /><a href="https://twitter.com/arnonrdp"
-					target="_blank">Twitter</a></p>
+			<p>Copyright &copy 2020 - by <a href="https://arnon.dev" target="_blank">Arnon.dev</a></p>
 		</div>
 	</footer>
 
