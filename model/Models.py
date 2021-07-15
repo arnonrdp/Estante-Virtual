@@ -52,8 +52,4 @@ class Book(db.Model):
         return self.title
 
 
-db.create_all()
-
-if __name__ == "__main__":
-    app.run(debug=True)
-    
+# db.create_all()
