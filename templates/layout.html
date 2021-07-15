@@ -7,6 +7,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="static/styles.css">
 	<link rel="shortcut icon" href="static/favicon.svg" type="image/svg">
+
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+
+
 	{% block head %}{% endblock %}
 	<title>Minha Estante Virtual</title>
 </head>
@@ -17,17 +27,21 @@
 		{% if session.name %}
 		<h1><span>Estante: {{ session.name }}</span></h1>
 		{% else %}
-    <h1><span>Sua Estante</span></h1>
-    {% endif %}
+		<h1><span>Sua Estante</span></h1>
+		{% endif %}
 	</header>
 
 	<!-- Barra Lateral -->
 	<aside class="mainAside tab">
 		<ul>
-			<li><a class="tablinks" onclick="alternar(event, 'Início', null)" id="defaultOpen"><img src="static/img/books.svg"></img><br>Início</a></li>
-			<li><a class="tablinks" onclick="alternar(event, 'Adicionar', null)"><img src="static/img/search.svg"></img><br>Adicionar</a></li>
-			<li><a class="tablinks" onclick="alternar(event, 'Amigos', null)"><img src="static/img/people.svg"></img><br>Amigos</a></li>
-			<li><a class="tablinks" onclick="alternar(event, 'Ajustes', null)"><img src="static/img/settings.svg"></img><br>Ajustes</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Início', null)" id="defaultOpen"><img
+						src="static/img/books.svg"></img><br>Início</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Adicionar', null)"><img
+						src="static/img/search.svg"></img><br>Adicionar</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Amigos', null)"><img
+						src="static/img/people.svg"></img><br>Amigos</a></li>
+			<li><a class="tablinks" onclick="alternar(event, 'Ajustes', null)"><img
+						src="static/img/settings.svg"></img><br>Ajustes</a></li>
 		</ul>
 	</aside>
 
