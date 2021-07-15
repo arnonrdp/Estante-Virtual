@@ -6,3 +6,4 @@ venv
 bizu.txt
 -- SQLite.md
 templates/backupEstanteArnon.html
+Estante.db
