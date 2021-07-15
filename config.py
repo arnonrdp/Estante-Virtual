@@ -12,8 +12,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bqucsxtgiaflnu:5d54470ffd2
 db = SQLAlchemy(app)
 
 # Google Books API
-API = os.environ.get('APIKEY')
+API = 'AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
+# os.environ.get('APIKEY')
 
 # Ensure templates are auto-reloaded
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

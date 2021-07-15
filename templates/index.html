@@ -8,7 +8,7 @@
     {% for livro in livros %}
     <figure>
       <a><img src="{{ livro.thumbnail }}"></a>
-      <a href="/remove/{{ livro.book_id }}" class="dropdown">REMOVER</a>
+      <a href="/remove/{{ livro.bid }}" class="dropdown">REMOVER</a>
       <figcaption>{{ livro.title }}</figcaption>
     </figure>
     {% endfor %}
