@@ -1,11 +1,11 @@
 import requests
 from flask import render_template, redirect, request, session
+from flask_login import LoginManager
 from flask_session import Session
 from tempfile import mkdtemp
 
 from config import *
-from model.Books import Books
-from model.User import User
+from model.Models import User, Book, user_book
 from helpers import login_required
 
 # Configure session to use filesystem (instead of signed cookies)
@@ -13,9 +13,6 @@ app.config["SESSION_FILE_DIR"] = mkdtemp()  # Check later
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-
-# Google Books API Key
-APIKEY = 'AIzaSyAJGXLBDW269OHGuSblb0FTg80EmdLLdBQ'
 
 
 # Ensure responses aren't cached
@@ -35,8 +32,12 @@ def index():
 
 
 def bookshelf():
-    user_id = User.query.filter_by(email=session['email']).first().id
-    return Books.query.filter_by(user_id=user_id).all()
+    """
+    Gets the id of the logged in user, queries the
+    database for the books that this id has already added.
+    """
+    user_id = db.session.query(User).filter_by(email=session['email']).first().uid
+    return db.session.query(Book).join(user_book).filter_by(uid=user_id).all()
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -74,11 +75,11 @@ def search():
     infobooks = []
     if request.method == "POST":
         seek = request.form.get("seek")
-        url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&maxResults=40&printType=books&key={APIKEY}'
+        url = f'https://www.googleapis.com/books/v1/volumes?q={seek}&maxResults=40&printType=books&key={API}'
         response = requests.get(url)
         response.raise_for_status()
         results = response.json().get('items', [])
-        no_image = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png'
+        no_image = '/static/img/no_cover.jpg'
         for result in results:
             info = result.get('volumeInfo', {})
             imageLinks = info.get("imageLinks", {})
@@ -98,19 +99,24 @@ def search():
 @login_required
 def add(book_id):
     """Atribui um livro ao ID do usuário"""
-    user = User.query.filter_by(email=session['email']).first()
+    user = db.session.query(User).filter_by(email=session['email']).first()
     try:
         url = f'https://www.googleapis.com/books/v1/volumes/{book_id}'
         response = requests.get(url)
         response.raise_for_status()
-        book = response.json()
-        insert = Books(user_id=user.id,
-                       book_id=book['id'],
-                       title=book['volumeInfo']['title'],
-                       thumbnail=book['volumeInfo']['imageLinks']['thumbnail'])
-        db.session.add(insert)
+        gbook = response.json()
+        book_query = db.session.query(Book).filter_by(bid=book_id).first()
+        if not book_query:
+            book_query = Book(bid=book_id,
+                              title=gbook['volumeInfo']['title'],
+                              authors=gbook['volumeInfo']['authors'][0],
+                              thumbnail=gbook['volumeInfo']['imageLinks']['thumbnail']
+                              )
+            db.session.add(book_query)
+            db.session.commit()
+        db.session.execute(user_book.insert().values(uid=user.uid, bid=gbook['id']))
         db.session.commit()
-    except (KeyError, TypeError, ValueError, requests.RequestException) as e:
+    except Exception as e:
         print(e)
     return redirect("/")
 
@@ -120,9 +126,9 @@ def add(book_id):
 def remove(book_id):
     """Remove um livro do ID do usuário"""
     try:
-        user = User.query.filter_by(email=session['email']).first()
-        book = Books.query.filter_by(book_id=book_id, user_id=user.id).first()
-        db.session.delete(book)
+        user = db.session.query(User).filter_by(email=session['email']).first()
+        book_rm = Book.query.get(book_id) 
+        user.books.remove(book_rm)
         db.session.commit()
     except Exception as e:
         print(e)
