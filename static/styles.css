@@ -203,10 +203,6 @@ main {
 #result figure {
 	width: 10em;
 }
-/* FORMATAÇÃO DA ABA AMIGOS */
-section#Amigos {
-	justify-content: center;
-}
 /* FORMATAÇÃO DA ABA AJUSTES */
 section#Ajustes {
 	justify-content: center;
