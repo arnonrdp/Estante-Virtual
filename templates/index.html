@@ -17,7 +17,7 @@
   <!-- Aba Adicionar -->
   <section id="Adicionar" class="tabcontent">
     <form action="/search" method="POST">
-      <input type="text" id="search" name="seek" placeholder="Pesquise por título, autor, editora, lançamento, ISBN..." />
+      <input type="text" id="search" name="seek" />
       <button type="submit">Buscar</button>
     </form>
     <div id="result">
@@ -28,14 +28,6 @@
         <figcaption>{{ infobook['title'] }}<br>{{ infobook['authors'] }}</figcaption>
       </figure>
       {% endfor %}
-    </div>
-  </section>
-
-  <!-- Aba Amigos -->
-  <section id="Amigos" class="tabcontent">
-    <div>
-      <p>Aqui vamos ver nossos amigos.</p>
-      <p>Mas esta funcionalidade ainda não foi adicionada.</p>
     </div>
   </section>
 
